@@ -25,62 +25,25 @@ def pregunta_01():
 
     df["sexo"] = df["sexo"].str.strip().str.lower()
 
-    df["tipo_de_emprendimiento"] = (
-        df["tipo_de_emprendimiento"]
-        .str.strip()
-        .str.lower()
-    )
+    df["tipo_de_emprendimiento"] = (df["tipo_de_emprendimiento"].str.strip().str.lower())
 
-    df["idea_negocio"] = (
-        df["idea_negocio"]
-        .str.strip()
-        .str.lower()
-        .str.replace("-", " ", regex=False)
-        .str.replace("_", " ", regex=False)
-        .str.replace(r"\s+", " ", regex=True)
-        .str.strip()
-    )
+    df["idea_negocio"] = (df["idea_negocio"].str.strip().str.lower().str.replace("-", " ", regex=False)
+        .str.replace("_", " ", regex=False).str.replace(r"\s+", " ", regex=True).str.strip())
 
-    df["barrio"] = (
-        df["barrio"]
-        .str.lower()
-        .str.replace("-", " ", regex=False)
-        .str.replace("_", " ", regex=False)
-        .str.replace(r"\s+", " ", regex=True)
-    )
-
-    df["línea_credito"] = (
-        df["línea_credito"]
-        .str.strip()
-        .str.lower()
-        .str.replace("-", " ", regex=False)
-        .str.replace("_", " ", regex=False)
-        .str.replace(".", " ", regex=False)
-        .str.replace(r"\s+", " ", regex=True)
-        .str.strip()
-    )
-
-    df["monto_del_credito"] = (
-        df["monto_del_credito"]
-        .str.strip()
-        .str.replace("$", "", regex=False)
-        .str.replace(",", "", regex=False)
-        .str.replace(".00", "", regex=False)
-        .str.strip()
-    )
-
+    df["barrio"] = (df["barrio"].str.lower().str.replace("-", " ", regex=False).str.replace("_", " ", regex=False).str.replace(r"\s+", " ", regex=True))
+    df["línea_credito"] = (df["línea_credito"].str.strip().str.lower().str.replace("-", " ", regex=False)
+        .str.replace("_", " ", regex=False).str.replace(".", " ", regex=False).str.replace(r"\s+", " ", regex=True).str.strip())
+    df["monto_del_credito"] = (df["monto_del_credito"].str.strip().str.replace("$", "", regex=False)
+        .str.replace(",", "", regex=False).str.replace(".00", "", regex=False).str.strip())
     def limpiar_fecha(fecha):
         partes = str(fecha).split("/")
-
         if len(partes[0]) == 4:
             year, month, day = partes
         else:
             day, month, year = partes
-
         return f"{int(year):04d}-{int(month):02d}-{int(day):02d}"
 
     df["fecha_de_beneficio"] = df["fecha_de_beneficio"].apply(limpiar_fecha)
-
     df = df.dropna()
     df = df.drop_duplicates()
 
